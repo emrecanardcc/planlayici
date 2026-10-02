@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haftalık Planlayıcı</title>
+    
+    <!-- CSS Katmanları (Sıralama Önemlidir) -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- ================= SOL PANEL: TAKVİM ================= -->
+        <main class="calendar-main">
+            
+            <!-- Üst Bar (Premium Header) -->
+            <header class="top-bar">
+                <!-- Başlık ekranın tam merkezine sabitlendi -->
+                <div class="app-title-wrapper">
+                    <div class="live-indicator" title="Uygulama Canlı ve Devrede"></div>
+                    <h1 class="app-title" contenteditable="true" id="app-title" spellcheck="false">Emre'nin Planlayıcısı</h1>
+                </div>
+                
+                <div style="display: flex; gap: 12px; align-items: center; margin-left: auto;">
+                    <!-- Tema Değiştirme Butonu (Dark/Light) -->
+                    <button id="theme-toggle-btn" class="btn btn-icon" title="Gece/Gündüz Modu">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    <!-- PDF Çıktı Butonu -->
+                    <button id="pdf-export-btn" class="btn btn-primary" title="Programı A4 Formatında Yazdır" style="border-radius: 20px; padding: 8px 20px;">
+                        Planı Yazdır
+                    </button>
+                </div>
+            </header>
+
+            <!-- Gün Başlıkları -->
+            <div class="grid-header">
+                <div class="time-header-spacer">Saat</div>
+                <div class="day-header">Pazartesi</div>
+                <div class="day-header">Salı</div>
+                <div class="day-header">Çarşamba</div>
+                <div class="day-header">Perşembe</div>
+                <div class="day-header">Cuma</div>
+                <div class="day-header">Cumartesi</div>
+                <div class="day-header">Pazar</div>
+            </div>
+            
+            <!-- Ana Takvim Izgarası (JavaScript ile doldurulacak) -->
+            <div class="grid-container" id="grid-container">
+                <div class="grid-body" id="grid-body">
+                    <!-- Artık kırmızı saat çizgisi (current-time-line) HTML'den ve sistemden tamamen kaldırıldı -->
+                </div>
+            </div>
+        </main>
+
+        <!-- ================= SAĞ PANEL: SIDEBAR ================= -->
+        <aside class="sidebar" id="sidebar">
+            
+            <!-- Yeni Şablon Oluşturma -->
+            <div class="sidebar-section">
+                <h2>Yeni Şablon Ekle</h2>
+                <div class="form-group" style="display: flex; gap: 8px; margin-bottom: 0;">
+                    <div class="color-picker-wrapper">
+                        <input type="color" id="new-event-color" value="#3b82f6" title="Renk Seç">
+                    </div>
+                    <input type="text" id="new-event-name" class="form-control" placeholder="Örn: Stocado, Ders...">
+                    <button id="add-event-btn" class="btn btn-primary">Ekle</button>
+                </div>
+            </div>
+
+            <!-- Şablon Kütüphanesi -->
+            <div class="sidebar-section">
+                <h2>
+                    Kütüphane
+                    <span style="font-size:10px; font-weight:normal; text-transform:none; color: var(--text-light);">(Sürükle-Bırak)</span>
+                </h2>
+                <div class="event-library" id="event-library">
+                    <!-- JS ile dinamik şablonlar buraya gelecek -->
+                </div>
+            </div>
+
+            <!-- YENİ EKLENEN: Otomatik Uyku Modülü -->
+            <div class="sidebar-section">
+                <h2>Uyku Düzeni <span style="font-size:10px; font-weight:normal; text-transform:none; color: var(--text-light);">(Otomatik Doldur)</span></h2>
+                <div class="form-row" style="gap: 8px; margin-bottom: 12px;">
+                    <div style="flex: 1;">
+                        <label class="form-label" style="font-size: 11px;">Yatış Saati</label>
+                        <input type="time" id="sleep-start" class="form-control" value="23:30">
+                    </div>
+                    <div style="flex: 1;">
+                        <label class="form-label" style="font-size: 11px;">Kalkış Saati</label>
+                        <input type="time" id="sleep-end" class="form-control" value="07:30">
+                    </div>
+                </div>
+                <button id="apply-sleep-btn" class="btn btn-success" style="width: 100%; border-radius: 20px;">
+                    Uyku Saatlerini Planla
+                </button>
+            </div>
+
+            <!-- İstatistikler -->
+            <div class="sidebar-section">
+                <h2>İstatistikler</h2>
+                <div id="stats-container">
+                    <!-- JS ile analiz kartları buraya gelecek -->
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- ================= MODAL: ETKİNLİK DÜZENLEME (2 KOLONLU YENİ YAPI) ================= -->
+    <div id="edit-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Etkinlik Detayları</h3>
+                <button class="modal-close" id="close-modal-btn">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-grid">
+                    
+                    <!-- Sol Kolon: İÇERİK AYARLARI -->
+                    <div class="modal-column-left">
+                        <div class="modal-section-title">İçerik</div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Başlık</label>
+                            <input type="text" id="modal-title" class="form-control">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Başlangıç Saati</label>
+                                <input type="time" id="modal-start" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Bitiş Saati</label>
+                                <input type="time" id="modal-end" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Açıklama / Notlar</label>
+                            <textarea id="modal-desc" class="form-control" rows="4" placeholder="Bu etkinlikle ilgili detaylar..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Sağ Kolon: GÖRÜNÜM AYARLARI -->
+                    <div class="modal-column-right">
+                        <div class="modal-section-title">Görünüm</div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Kutu Rengi</label>
+                                <input type="color" id="modal-bg-color" class="form-control" style="height: 42px; padding: 4px;">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Yazı Rengi</label>
+                                <input type="color" id="modal-text-color" class="form-control" style="height: 42px; padding: 4px;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Yazı Kalınlığı</label>
+                            <select id="modal-font-weight" class="form-control">
+                                <option value="400">Normal (Regular)</option>
+                                <option value="500">Orta (Medium)</option>
+                                <option value="600">Kalın (Semi-Bold)</option>
+                                <option value="700">Çok Kalın (Bold)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Yazı Boyutu (px)</label>
+                            <input type="number" id="modal-font-size" class="form-control" value="14" min="10" max="30">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="modal-delete-btn" class="btn btn-danger">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    Etkinliği Sil
+                </button>
+                <button id="modal-save-btn" class="btn btn-success">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                    Kaydet
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ES6 Modül Sistemini Kullanarak Ana JavaScript Dosyasını Çağırıyoruz -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

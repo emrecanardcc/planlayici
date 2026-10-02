@@ -1,0 +1,60 @@
+/* ==========================================================================
+   VARIABLES.CSS - PREMIUM TASARIM SİSTEMİ (V3.0)
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* LIGHT MODE */
+    --bg-color: #ffffff;
+    --bg-secondary: #f8fafc;
+    --mesh-bg: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    
+    --bg-input: #f4f4f5; /* İnputlar daha modern gri */
+    --bg-hover: #e4e4e7;
+    
+    --text-main: #18181b; /* Tam siyah değil, okunabilir antrasit */
+    --text-muted: #71717a;
+    --text-light: #a1a1aa;
+    
+    --text-gradient: linear-gradient(90deg, #2563eb 0%, #0ea5e9 100%);
+    
+    --border-color: #e4e4e7;
+    --grid-line: #f4f4f5; 
+    --grid-line-sub: rgba(0, 0, 0, 0.03); 
+
+    --primary-color: #2563eb;
+    --success-color: #10b981;
+    --danger-color:  #ef4444;
+
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.05);
+    --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+
+    --time-column-width: 60px; /* Çok genişti, daha kibar hale getirdik */
+    --header-height: 70px;
+}
+
+[data-theme="dark"] {
+    --bg-color: #09090b;
+    --bg-secondary: #18181b;
+    --mesh-bg: linear-gradient(135deg, #18181b 0%, #09090b 100%);
+    
+    --bg-input: #27272a;
+    --bg-hover: #3f3f46;
+    
+    --text-main: #fafafa;
+    --text-muted: #a1a1aa;
+    --text-light: #71717a;
+    
+    --text-gradient: linear-gradient(90deg, #60a5fa 0%, #38bdf8 100%);
+    
+    --border-color: #27272a;
+    --grid-line: #18181b;
+    --grid-line-sub: rgba(255, 255, 255, 0.02);
+}
